@@ -40,6 +40,45 @@
             $stmt->execute(['id' => $coachUserId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function getSportifSessionsCount(int $sportifId, string $statut): int {
+            $sql = "SELECT COUNT(*)
+                    FROM seance s
+                    JOIN sportif sp ON s.id_sportif = sp.id_sportif
+                    WHERE sp.id_user = :id AND s.statut = :statut
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                'id' => $sportifId,
+                'statut' => $statut
+            ]);
+            return $stmt->fetchColumn();
+        }
+
+        public function getSportifSessionsCompletesCount(int $sportifId): int {
+            $sql = "SELECT COUNT(s.id_seance) AS total
+                    FROM seance s
+                    JOIN sportif sp ON s.id_sportif = sp.id_sportif
+                    WHERE sp.id_user = :id AND s.date_seance < CURDATE()
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $sportifId]);
+            return $stmt->fetchColumn();
+        }
+
+        public function getSportifReservations(int $sportifId): array {
+            $sql = "SELECT s.*, u.nom AS coach_nom, u.prenom AS coach_prenom 
+                    FROM seance s
+                    JOIN coach c ON s.id_coach = c.id_coach
+                    JOIN Utilisateur u ON c.id_user = u.id_user
+                    JOIN sportif sp ON s.id_sportif = sp.id_sportif
+                    WHERE sp.id_user = :id
+                    ORDER BY s.date_seance ASC
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $sportifId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 
 
