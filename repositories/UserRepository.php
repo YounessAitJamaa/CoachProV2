@@ -36,19 +36,19 @@
             $details = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return new Coach( 
-                $userData['nom'], 
-                $userData['prenom'], 
-                $userData['email'],
-                $userData['mot_de_passe'], 
-                $details['photo'],
-                $details['biographie'], 
-                $details['experience'],
-                $details['niveau'],
-                $details['adresse'], 
-                $details['telephone'],
-                (int) $userData['id_user'],
-                (int) $details['id_coach'],
-                $userData['date_inscription'], 
+                (int)$userData['id_user'],     
+                $userData['nom'],                 
+                $userData['prenom'],              
+                $userData['email'],               
+                $userData['mot_de_passe'],        
+                $userData['date_inscription'],    
+                (int)$details['id_coach'],        
+                $details['photo'],                
+                $details['biographie'],           
+                (int)$details['experience'],    
+                $details['niveau'],               
+                $details['adresse'],              
+                $details['telephone']
             );
         }
 
@@ -65,8 +65,8 @@
                 $details['photo'], 
                 $details['telephone'], 
                 $details['date_naissance'],
-                $userData['id_user'], 
-                $details['id_sportif'],
+                (int)$userData['id_user'], 
+                (int)$details['id_sportif'],
                 $userData['date_inscription']
             );
         }

@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+    
     require_once __DIR__ . '/../config/database.php';
     require_once __DIR__ . '/../repositories/UserRepository.php';
 
@@ -203,14 +205,5 @@
             </div>
         </div>
     </div>
-    <script src="../assets/js/script.js"></script>
-    <script>
-
-        const jserrors = <?= json_encode($errors) ?>;
-        const jssuccess = <?= json_encode($success) ?>;
-
-        showErrors(jserrors);
-        showSuccess(jssuccess);
-    </script>
 </body>
 </html>
