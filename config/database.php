@@ -10,7 +10,6 @@
         
 
         public function getConnection() {
-            $this->conn = null;
             
             if($this->conn === null) {
                 try {
@@ -28,6 +27,5 @@
         }
 
     }
-
 
 ?>
