@@ -46,8 +46,8 @@
                 $details['niveau'],
                 $details['adresse'], 
                 $details['telephone'],
-                $userData['id_user'],
-                $details['id_coach'],
+                (int) $userData['id_user'],
+                (int) $details['id_coach'],
                 $userData['date_inscription'], 
             );
         }

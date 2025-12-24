@@ -21,7 +21,7 @@
             string $mot_de_pass, 
             string $date_inscription,
             int $id_coach,
-            string $photo,  
+            string $photo,
             string $biographie,
             int $experience,
             string $niveau,
