@@ -1,8 +1,8 @@
 <?php
 
     session_start();
-    require_once __DIR__ . '../../../config/database.php';
-    require_once __DIR__ . '../../../classes/Coach.php';
+    require_once '../../config/database.php';
+    require_once '../../classes/Coach.php';
     require_once '../../repositories/SeanceRepository.php';
 
 

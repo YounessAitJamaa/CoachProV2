@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . '/User.php';
+    require_once 'User.php';
 
     class Coach extends User
     {
@@ -56,6 +56,12 @@
         public function getNiveau(): string { return $this->niveau; }
         public function getAdresse(): string { return $this->adresse; }
         public function getTelephone(): string { return $this->telephone; }
+
+        public function setPhoto(string $photo) { $this->photo = $photo; }
+        public function setBiographie(string $biographie) { $this->biographie = $biographie; }
+        public function setExperience(int $experience) { $this->experience = $experience; }
+        public function setNiveau(string $niveau) { $this->niveau = $niveau; }
+
     }
 
 ?>

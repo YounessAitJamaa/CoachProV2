@@ -23,7 +23,7 @@
                 $coach = new Coach (
                     0, $_POST['nom'], $_POST['prenom'], $_POST['email'],
                     $_POST['mot_de_passe'], date('Y-m-d'),
-                    0, 'default.png', 'Bio', 0, 'Debutant', 'A renseigner', '0000000000'
+                    0, '../../assets/img/default.jpeg', 'Bio', 0, 'Debutant', 'A renseigner', '0000000000'
                 );
 
                     $repo = new CoachRepository($db);

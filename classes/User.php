@@ -29,6 +29,10 @@
         public function getMotDePass(): string { return $this->mot_de_pass;}
         public function getIdRole(): int { return $this->id_role;}
         public function getDateInscription(): string { return $this->date_inscription;}
+
+        public function setNom(string $nom) { $this->nom = $nom; }
+        public function setPrenom(string $prenom) { $this->prenom = $prenom; }
+        public function setEmail(string $email) { $this->email = $email; }
     }
 
-?>
+?>  

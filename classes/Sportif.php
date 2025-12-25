@@ -1,6 +1,6 @@
 <?php
 
-    require_once __DIR__ . '/User.php';
+    require_once 'User.php';
 
     class Sportif extends User 
     {
@@ -15,7 +15,7 @@
             string $prenom, 
             string $email, 
             string $mot_de_pass,
-            string $photo = 'default_user.png',
+            string $photo = '../../assets/img/default.jpeg',
             string $telephone = '0000000000',
             string $date_naissance = '1990-01-01',  
             int $id_user = 0,
@@ -43,6 +43,10 @@
         public function getPhoto(): string { return $this->photo; }
         public function getTelephone(): string { return $this->telephone; }
         public function getDatNaissance(): string { return $this->date_naissance; }
+
+        public function setPhoto(string $photo) { $this->photo = $photo;} 
+        public function setTelephone(string $telephone) { $this->telephone = $telephone; }
+
     }
 
 ?>

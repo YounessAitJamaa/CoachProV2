@@ -1,8 +1,8 @@
 <?php
 
     session_start();
-    require_once __DIR__ . '../../../config/database.php';
-    require_once __DIR__ . '../../../classes/Sportif.php';
+    require_once '../../config/database.php';
+    require_once '../../classes/Sportif.php';
     require_once '../../repositories/SeanceRepository.php';
     
     if(!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 1) {
