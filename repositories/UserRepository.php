@@ -133,7 +133,19 @@
         public function getAllDisciplines() {
             $stmt = $this->db->prepare("SELECT * FROM disciplines");
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $disciplines = [];
+
+            foreach ($results as $row) {
+                
+                $disciplines[] = new Discipline(
+                    (int)$row['id_discipline'], 
+                    (string)$row['nom_discipline']
+                );
+            }
+
+            return $disciplines;
         }
 
 
@@ -173,6 +185,15 @@
                 return false;
             }
         }
+
+        // public function getAllDisciplines() {
+        //     $stmt = $this->db->prepare("SELECT * FROM disciplines");
+        //     $stmt->execute();
+        //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // }
+ 
+
+
     }
 
 

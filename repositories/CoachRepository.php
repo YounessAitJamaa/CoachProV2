@@ -2,6 +2,7 @@
 
     // require_once __DIR__ . '/../config/database.php';
     require_once __DIR__ . '/../classes/Coach.php';
+    require_once __DIR__ . '/../classes/Discipline.php';
 
 
     class CoachRepository {
@@ -51,6 +52,87 @@
                 $this->db->rollBack();
                 return false;
             }
+        }
+
+        public function getAvailableCoaches(?int $disciplineId = null): array {
+            $sql = "SELECT u.nom, u.prenom, c.*, 
+                    AVG(a.note) as moyenne_note, 
+                    COUNT(a.id_avis) as total_avis
+                    FROM coach c
+                    JOIN Utilisateur u ON c.id_user = u.id_user
+                    LEFT JOIN avis a ON c.id_coach = a.id_coach";
+            
+            $params = [];
+            if ($disciplineId) {
+                $sql .= " JOIN coach_discipline cd ON c.id_coach = cd.id_coach 
+                        WHERE cd.id_discipline = :discId";
+                $params['discId'] = $disciplineId;
+            }   
+
+            $sql .= " GROUP BY c.id_coach, u.nom, u.prenom";
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getAllDisciplines() {
+
+            $sql = "SELECT id_discipline, nom_discipline FROM disciplines";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            $disciplines = [];
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $disciplines[] =  new Discipline(
+                    (int)$row['id_discipline'],
+                    $row['nom_discipline']
+                );
+            }
+
+            return $disciplines;
+        }
+
+        public function getCoachById(int $id) {
+            $sql = "SELECT 
+                        u.nom AS coach_nom, 
+                        u.prenom AS coach_prenom, 
+                        c.experience, 
+                        c.biographie, 
+                        c.photo,
+                        c.id_coach,
+                        AVG(a.note) as moyenne_note, 
+                        COUNT(a.id_avis) as total_avis
+                    FROM coach c
+                    JOIN Utilisateur u ON c.id_user = u.id_user
+                    LEFT JOIN avis a ON c.id_coach = a.id_coach
+                    WHERE c.id_coach = :id
+                    GROUP BY c.id_coach, u.nom, u.prenom, c.experience, c.biographie, c.photo";
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function getDisciplinesByCoachId(int $coachId) {
+            $sql = "SELECT d.nom_discipline 
+            FROM disciplines d
+            JOIN coach_discipline cd ON d.id_discipline = cd.id_discipline
+            WHERE cd.id_coach = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $coachId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getCoachDisponibilites(int $coachId) {
+            $sql = "SELECT * FROM disponibilite 
+            WHERE id_coach = :id 
+            AND statut = 'disponible' 
+            ORDER BY date_disponibilite ASC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['id' => $coachId]);
+            return $stmt;
         }
     }
 
