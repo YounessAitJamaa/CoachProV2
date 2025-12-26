@@ -47,6 +47,23 @@
                 return false;
             }
         }
+
+        public function getSportifByUserId(int $userId) {
+            $sql = "SELECT id_sportif, photo, telephone, date_naissance 
+                    FROM sportif 
+                    WHERE id_user = :uid 
+                    LIMIT 1";
+                    
+            try {
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(['uid' => $userId]);
+                
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                error_log("Error in getSportifByUserId: " . $e->getMessage());
+                return false;
+            }
+        }
     }
 
 

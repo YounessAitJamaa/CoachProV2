@@ -23,9 +23,6 @@
     $reservations = $seanceRepo->getSportifReservations($sportifId);
 
     
-
-
-
 ?>
 
 <!DOCTYPE html>

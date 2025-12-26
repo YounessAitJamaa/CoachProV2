@@ -121,50 +121,56 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <?php foreach($demands as $row): ?>
-                    <!-- Reservation card 1 -->
-                    <div class="bg-slate-900/50 rounded-lg p-6 border border-slate-700/30 hover:border-orange-500/50 transition-all duration-300">
-                        <h3 class="font-bold text-xl mb-4 text-white"><?= htmlspecialchars($row['client_nom']) .' '. htmlspecialchars($row['client_prenom']) ?></h3>
-                        <div class="space-y-2 mb-6">
-                            <div class="flex items-center gap-2 text-slate-300">
-                                <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                </svg>
-                                <span class="text-sm"><?= htmlspecialchars($row['nom_discipline']) ?></span>
-                            </div>
-                            <div class="flex items-center gap-2 text-slate-300">
-                                <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span class="text-sm"><?= htmlspecialchars($row['date_seance']) ?></span>
-                            </div>
-                            <div class="flex items-center gap-2 text-slate-300">
-                                <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span class="text-sm"><?= htmlspecialchars($row['heure']) ?></span>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <form action="traiter_reservation.php" method="POST" class="flex-1">
-                                <input type="hidden" name="id_seance" value="<?= $row['id_seance'] ?>">
-                                <input type="hidden" name="action" value="accepte">
-                                <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors">
-                                    Accepter
-                                </button>
-                            </form>
-
-                            <form action="traiter_reservation.php" method="POST" class="flex-1">
-                                <input type="hidden" name="id_seance" value="<?= $row['id_seance'] ?>">
-                                <input type="hidden" name="action" value="refuse">
-                                <button type="submit" class="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors" 
-                                        onclick="return confirm('Voulez-vous vraiment refuser cette demande ?')">
-                                    Refuser
-                                </button>
-                            </form>
-                        </div>
+                <?php if (empty($demands)): ?>
+                    <div class="col-span-full bg-slate-900/30 border border-dashed border-slate-700 rounded-xl p-12 text-center">
+                        <p class="text-slate-500">Aucune demande de réservation pour le moment.</p>
                     </div>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach($demands as $row): ?>
+                        <!-- Reservation card 1 -->
+                        <div class="bg-slate-900/50 rounded-lg p-6 border border-slate-700/30 hover:border-orange-500/50 transition-all duration-300">
+                            <h3 class="font-bold text-xl mb-4 text-white"><?= htmlspecialchars($row['client_nom']) .' '. htmlspecialchars($row['client_prenom']) ?></h3>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex items-center gap-2 text-slate-300">
+                                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span class="text-sm"><?= htmlspecialchars($row['nom_discipline']) ?></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-300">
+                                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span class="text-sm"><?= htmlspecialchars($row['date_seance']) ?></span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-300">
+                                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="text-sm"><?= htmlspecialchars($row['heure']) ?></span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <form action="traiter_reservation.php" method="POST" class="flex-1">
+                                    <input type="hidden" name="id_seance" value="<?= $row['id_seance'] ?>">
+                                    <input type="hidden" name="action" value="accepte">
+                                    <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors">
+                                        Accepter
+                                    </button>
+                                </form>
+
+                                <form action="traiter_reservation.php" method="POST" class="flex-1">
+                                    <input type="hidden" name="id_seance" value="<?= $row['id_seance'] ?>">
+                                    <input type="hidden" name="action" value="refuse">
+                                    <button type="submit" class="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors" 
+                                            onclick="return confirm('Voulez-vous vraiment refuser cette demande ?')">
+                                        Refuser
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
