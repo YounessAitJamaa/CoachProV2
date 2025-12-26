@@ -130,8 +130,7 @@
             try {
                 $this->db->beginTransaction();
 
-                // 1. Insertion dans la table 'seance' (vérifiez bien le nom singulier)
-                // Note : j'ai ajouté id_discipline car il est présent dans votre structure
+                
                 $sqlSeance = "INSERT INTO seance (date_seance, heure, statut, id_sportif, id_coach, id_discipline, id_disponibilite) 
                             VALUES (:date, :heure, 'en attente', :id_s, :id_c, :id_disc, :id_d)";
                 
@@ -141,11 +140,11 @@
                     'heure'   => $dispo['heure_debut'],
                     'id_s'    => $id_sportif,
                     'id_c'    => $dispo['id_coach'],
-                    'id_disc' => $dispo['id_discipline'] ?? 1, // Valeur par défaut si non définie
+                    'id_disc' => $dispo['id_discipline'] ?? 1,
                     'id_d'    => $dispo['id_disponibilite']
                 ]);
 
-                // 2. Mise à jour de la table 'disponibilite'
+                
                 $sqlUpd = "UPDATE disponibilite SET statut = 'reserve' WHERE id_disponibilite = :id";
                 $stmtU = $this->db->prepare($sqlUpd);
                 $stmtU->execute(['id' => $dispo['id_disponibilite']]);

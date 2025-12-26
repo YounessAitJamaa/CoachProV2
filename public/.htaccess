@@ -1,0 +1,10 @@
+
+Options -Indexes
+
+ErrorDocument 404 /CoachProV2/public/404.php
+
+
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

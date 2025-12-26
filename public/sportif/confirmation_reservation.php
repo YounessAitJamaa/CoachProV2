@@ -4,7 +4,7 @@
     require_once '../../repositories/SeanceRepository.php';
     require_once '../../repositories/SportifRepository.php';
 
-    // Security: Athletes only
+    
     if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 1) {
         header('Location: ../login.php');
         exit();
