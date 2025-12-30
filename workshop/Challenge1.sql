@@ -23,11 +23,12 @@ GROUP BY u.nom, u.prenom
    taux de réservation (%)
 ===================================================== */
 
-    SELECT u.nom, u.prenom, (COUNT(s.id) / sum(s.id) * 100) AS total
-    FROM seances s
-    JOIN coachs c ON s.coach_id = c.user_id
-    JOIN users u ON c.user_id = u.id
-    GROUP BY u.nom, u.prenom
+   SELECT u.nom, u.prenom, (SUM(s.statut = 'reservee') / COUNT(*) * 100) AS total
+   FROM seances s
+   JOIN coachs c ON s.coach_id = c.user_id
+   JOIN users u ON c.user_id = u.id
+   GROUP BY u.nom, u.prenom
+
 
 
 /* =====================================================
